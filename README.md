@@ -92,18 +92,18 @@ spring.jpa.hibernate.ddl-auto=update
 tracw/
 ├── src/
 │   ├── main/
-│   │   ├── java/com/tracw/tracw/
-│   │   │   ├── controller/      # Contains REST controllers
-│   │   │   ├── model/           # Entity classes
-│   │   │   ├── repository/      # Database access layer
-│   │   │   ├── service/         # Business logic
-│   │   │   └── dto/             # Data Transfer Objects
-│   │   ├── resources/
-│   │   │   ├── templates/       # Thymeleaf templates (if applicable)
-│   │   │   ├── static/          # Static assets (CSS, JS, images)
-│   │   │   └── application.properties  # App configuration
-│   ├── test/                    # Unit and integration tests
-├── pom.xml                       # Maven build file
+│   │   ├── java/com/tracw/tracw/                                                                                                      
+│   │   │   ├── controller/                                                                                                                                 
+│   │   │   ├── model/                                                                                                                                              
+│   │   │   ├── repository/                                                                                                                                                
+│   │   │   ├── service/                                                                                                                                    
+│   │   │   └── dto/                                                                                                                                                       
+│   │   ├── resources/                                                                                                                                                         
+│   │   │   ├── templates/                                                                                                                                                    
+│   │   │   ├── static/                                                                                                                                                                   
+│   │   │   └── application.properties                                                                                                                                                 
+│   ├── test/                                                                                                                                                                          
+├── pom.xml                      
                    
 
 
