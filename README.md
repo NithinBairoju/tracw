@@ -91,20 +91,22 @@ spring.jpa.hibernate.ddl-auto=update
 ## Project Structure
 tracw/
 
+tracw/
 ├── src/
 │   ├── main/
 │   │   ├── java/com/tracw/tracw/
-│   │   │   ├── controller/
-│   │   │   ├── model/
-│   │   │   ├── repository/
-│   │   │   ├── service/
-│   │   │   └── dto/
-│   │   └── resources/
-│   │       ├── templates/
-│   │       ├── static/
-│   │       └── application.properties
-│   └── test/
-└── pom.xml
+│   │   │   ├── controller/     
+│   │   │   ├── model/          
+│   │   │   ├── repository/      
+│   │   │   ├── service/        
+│   │   │   └── dto/            
+│   │   ├── resources/
+│   │   │   ├── templates/      
+│   │   │   ├── static/         
+│   │   │   └── application.properties  
+│   ├── test/                   
+├── pom.xml                     
+
 
 ## Security Features
 - BCrypt password encryption
