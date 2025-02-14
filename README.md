@@ -90,8 +90,8 @@ spring.jpa.hibernate.ddl-auto=update
 
 ## Project Structure
 tracw/
-├── src/
-│   ├── main/
+├── src/                                                                                                                                                               
+│   ├── main/                                                                                                                                              
 │   │   ├── java/com/tracw/tracw/                                                                                                      
 │   │   │   ├── controller/                                                                                                                                 
 │   │   │   ├── model/                                                                                                                                              
