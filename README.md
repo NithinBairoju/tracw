@@ -114,13 +114,13 @@ tracw/
 - Secure form submission
 - Protected endpoints
 
-## Troubleshooting
+# Troubleshooting
 
-### Common Issues and Solutions
+## Common Issues and Solutions
 
 1. Port Conflict
    
-# Change in application.properties
+### Change in application.properties
 server.port=8081
 
 2. Database Connection Issues
@@ -141,4 +141,4 @@ server.port=8081
   mvn install
 4. Memory Issues
   bash
-  export MAVEN_OPTS="-Xmx512m"
+  export MAVEN_OPTS="-Xmjk512m"
