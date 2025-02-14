@@ -72,7 +72,7 @@ spring.jpa.hibernate.ddl-auto=update
 
 1. Clone the repository:
   bash
-  git clone [your-repository-url]
+  git clone https://github.com/NithinBairoju/tracw.git
   cd tracw
 
 2. Build the project:
@@ -90,22 +90,21 @@ spring.jpa.hibernate.ddl-auto=update
 
 ## Project Structure
 tracw/
-
-tracw/
 ├── src/
 │   ├── main/
 │   │   ├── java/com/tracw/tracw/
-│   │   │   ├── controller/     
-│   │   │   ├── model/          
-│   │   │   ├── repository/      
-│   │   │   ├── service/        
-│   │   │   └── dto/            
+│   │   │   ├── controller/      # Contains REST controllers
+│   │   │   ├── model/           # Entity classes
+│   │   │   ├── repository/      # Database access layer
+│   │   │   ├── service/         # Business logic
+│   │   │   └── dto/             # Data Transfer Objects
 │   │   ├── resources/
-│   │   │   ├── templates/      
-│   │   │   ├── static/         
-│   │   │   └── application.properties  
-│   ├── test/                   
-├── pom.xml                     
+│   │   │   ├── templates/       # Thymeleaf templates (if applicable)
+│   │   │   ├── static/          # Static assets (CSS, JS, images)
+│   │   │   └── application.properties  # App configuration
+│   ├── test/                    # Unit and integration tests
+├── pom.xml                       # Maven build file
+                   
 
 
 ## Security Features
