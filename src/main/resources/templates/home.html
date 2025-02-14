@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <title>TRACW - Your Trusted Financial Partner</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <style>
+        :root {
+            --primary-color: #1a5f7a;
+            --secondary-color: #86b7fe;
+            --accent-color: #e3f2fd;
+            --text-color: #333;
+            --light-bg: #f8f9fa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .nav-links {
+            background-color: white;
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-links a {
+            color: var(--primary-color);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            background-color: var(--accent-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .welcome-message {
+            background-color: var(--accent-color);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+
+        .logout-button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .logout-button:hover {
+            background-color: #134b61;
+        }
+
+        .login-prompt {
+            text-align: center;
+            padding: 3rem;
+            background-color: var(--light-bg);
+            border-radius: 8px;
+        }
+
+        .login-prompt a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .login-prompt a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .nav-links a {
+                display: block;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <h1>Welcome to TRACW</h1>
+        <p>Your Trusted Financial Partner</p>
+    </header>
+
+    <div sec:authorize="isAuthenticated()" class="container">
+        <div class="welcome-message">
+            <p>Welcome, <span sec:authentication="name"></span>! 🎉</p>
+        </div>
+
+        <nav class="nav-links">
+            <a th:href="@{/}">Dashboard</a>
+            <a th:href="@{/transactions/new}">New Transaction</a>
+            <a th:href="@{/transactions/transfer}">Transfer Money</a>
+            <a th:href="@{/transactions/history}">Transaction History</a>
+            <form th:action="@{/logout}" method="post" style="display: inline;">
+                <button type="submit" class="logout-button">Logout</button>
+            </form>
+        </nav>
+
+        <div class="features">
+            <div class="feature-card">
+                <h3>Quick Transfer</h3>
+                <p>Send money instantly to your friends and family with our secure transfer system.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Transaction History</h3>
+                <p>Keep track of all your transactions with detailed history and analytics.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Secure Banking</h3>
+                <p>Rest assured with our state-of-the-art security measures protecting your finances.</p>
+            </div>
+        </div>
+    </div>
+
+    <div sec:authorize="!isAuthenticated()" class="container">
+        <div class="login-prompt">
+            <h2>Access Your Account</h2>
+            <p>Please <a th:href="@{/login}">login</a> to access your financial dashboard and services.</p>
+            <p>New user? <a th:href="@{/register}">Register here</a></p>
+        </div>
+
+        <div class="features">
+            <div class="feature-card">
+                <h3>Online Banking</h3>
+                <p>Manage your accounts anytime, anywhere with our secure online banking platform.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Mobile App</h3>
+                <p>Download our mobile app for convenient banking on the go.</p>
+            </div>
+            <div class="feature-card">
+                <h3>24/7 Support</h3>
+                <p>Our customer service team is always here to help you with any questions.</p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

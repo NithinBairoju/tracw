@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <title>TRACW - Transaction History</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <style>
+        :root {
+            --primary-color: #1a5f7a;
+            --secondary-color: #86b7fe;
+            --accent-color: #e3f2fd;
+            --error-color: #dc3545;
+            --success-color: #198754;
+            --text-color: #333;
+            --light-bg: #f8f9fa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .nav-links {
+            background-color: white;
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: var(--primary-color);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            background-color: var(--accent-color);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            flex-grow: 1;
+        }
+
+        .history-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .balance-display {
+            background-color: var(--accent-color);
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .transaction-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .transaction-table th,
+        .transaction-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .transaction-table th {
+            background-color: var(--light-bg);
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .transaction-table tr:hover {
+            background-color: var(--accent-color);
+        }
+
+        .transaction-type {
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 500;
+            display: inline-block;
+        }
+
+        .type-deposit {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .type-withdraw {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .type-transfer-in {
+            background-color: #cce5ff;
+            color: #004085;
+        }
+
+        .type-transfer-out {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .alert {
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+
+        .alert-success {
+            background-color: #f0fff4;
+            color: var(--success-color);
+            border: 1px solid #c3e6cb;
+        }
+
+        .logout-button {
+            background-color: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .logout-button:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 1rem auto;
+            }
+
+            .history-card {
+                padding: 1rem;
+            }
+
+            .transaction-table {
+                display: block;
+                overflow-x: auto;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        .balance-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .balance-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .balance-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .balance-label {
+            color: var(--text-color);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .balance-amount {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .balance-change {
+            font-size: 0.9rem;
+            color: var(--success-color);
+        }
+
+        .balance-change.positive {
+            color: var(--success-color);
+        }
+
+        .balance-change.negative {
+            color: var(--error-color);
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <h1>TRACW</h1>
+        <p>Your Trusted Financial Partner</p>
+    </header>
+
+    <nav class="nav-links">
+        <a th:href="@{/}">Dashboard</a>
+        <a th:href="@{/transactions/new}">New Transaction</a>
+        <a th:href="@{/transactions/transfer}">Transfer Money</a>
+        <a th:href="@{/transactions/history}">Transaction History</a>
+        <form th:action="@{/logout}" method="post" style="display: inline;">
+            <button type="submit" class="logout-button">Logout</button>
+        </form>
+    </nav>
+
+    <div class="container">
+        <div class="history-card">
+            <h2 style="text-align: center; margin-bottom: 1.5rem;">Transaction History</h2>
+
+            <div class="balance-summary">
+                <div class="balance-card">
+                    <div class="balance-label">Current Balance</div>
+                    <div class="balance-amount" th:text="${#numbers.formatCurrency(currentBalance)}">$0.00</div>
+                    <div class="balance-change" th:if="${lastTransaction}"
+                        th:classappend="${lastTransaction.amount >= 0 ? 'positive' : 'negative'}"
+                        th:text="${lastTransaction.amount >= 0 ? '+' : ''} + ${#numbers.formatCurrency(lastTransaction.amount)}">
+                        +$0.00
+                    </div>
+                </div>
+            </div>
+
+            <div th:if="${message}" class="alert alert-success">
+                <p th:text="${message}">Success message</p>
+            </div>
+
+            <div style="overflow-x: auto;">
+                <table class="transaction-table">
+                    <thead>
+                        <tr>
+                            <th>Date & Time</th>
+                            <th>Type</th>
+                            <th>Amount</th>
+                            <th>Balance After</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="transaction : ${transactions}">
+                            <td th:text="${#temporals.format(transaction.timestamp, 'yyyy-MM-dd HH:mm:ss')}">2024-02-14
+                            </td>
+                            <td>
+                                <span th:class="'transaction-type ' + 
+                                    ${transaction.type == 'DEPOSIT' ? 'type-deposit' : 
+                                    transaction.type == 'WITHDRAW' ? 'type-withdraw' :
+                                    transaction.type == 'TRANSFER_IN' ? 'type-transfer-in' : 'type-transfer-out'}"
+                                    th:text="${transaction.type}">
+                                    DEPOSIT
+                                </span>
+                            </td>
+                            <td th:text="${#numbers.formatCurrency(transaction.amount)}">$0.00</td>
+                            <td th:text="${#numbers.formatCurrency(transaction.balanceAfter)}">$0.00</td>
+                            <td th:text="${transaction.description}">Transaction description</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
