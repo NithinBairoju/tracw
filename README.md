@@ -120,10 +120,10 @@ tracw/
 
 1. Port Conflict
    
-Change in application.properties
-server.port=8081
+   Change in application.properties
+   server.port=8081
 
-2. Database Connection Issues
+3. Database Connection Issues
 - Verify database credentials
 - Ensure database server is running
 - Check database URL
