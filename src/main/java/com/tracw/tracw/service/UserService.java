@@ -51,8 +51,7 @@ public class UserService {
     }
 
     private boolean isValidPhoneNumber(String phoneNumber) {
-        // Add your phone number validation logic here
-        // This is a simple example - you might want more sophisticated validation
-        return phoneNumber != null && phoneNumber.matches("\\d{10}"); // Assumes 10-digit phone numbers
+   
+        return phoneNumber != null && phoneNumber.matches("\\d{10}");
     }
 }
